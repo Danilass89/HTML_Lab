@@ -1,0 +1,34 @@
+interface Task {
+    id: string;
+    text: string;
+    completed: boolean;
+}
+
+const tasks: Task[] = [];
+
+function addTask(text: string): void {
+    const task: Task = {
+        id: Date.now().toString(),
+        text,
+        completed: false
+    };
+    tasks.push(task);
+}
+
+function toggleTaskCompletion(id: string): void {
+    const task = tasks.find(task => task.id === id);
+    if (task) {
+        task.completed = !task.completed;
+    }
+}
+
+function deleteTask(id: string): void {
+    const index = tasks.findIndex(task => task.id === id);
+    if (index !== -1) {
+        tasks.splice(index, 1);
+    }
+}
+
+function clearTasks(): void {
+    tasks.length = 0;
+}
