@@ -1,0 +1,44 @@
+interface Task {
+    text: string;
+    date: string;
+}
+
+function addTask() {
+    const taskInput: HTMLInputElement | null = document.getElementById("taskInput") as HTMLInputElement;
+    const taskList: HTMLUListElement | null = document.getElementById("taskList") as HTMLUListElement;
+
+    if (taskInput && taskList && taskInput.value.trim() !== "") {
+        const task: Task = {
+            text: taskInput.value.trim(),
+            date: new Date().toLocaleString()
+        };
+
+        const taskElement: HTMLLIElement = document.createElement("li");
+        const taskText: HTMLSpanElement = document.createElement("span");
+        const taskDate: HTMLSpanElement = document.createElement("span");
+        const deleteButton: HTMLButtonElement = document.createElement("button");
+
+        taskText.textContent = task.text;
+        taskDate.textContent = task.date;
+        deleteButton.textContent = "Удалить";
+
+        deleteButton.onclick = function() {
+            taskElement.remove();
+        };
+
+        taskElement.appendChild(taskText);
+        taskElement.appendChild(taskDate);
+        taskElement.appendChild(deleteButton);
+        taskList.appendChild(taskElement);
+        taskInput.value = "";
+    } else {
+        alert("Пожалуйста, введите задачу!");
+    }
+}
+
+function deleteAllTasks() {
+    const taskList: HTMLUListElement | null = document.getElementById("taskList") as HTMLUListElement;
+    if (taskList) {
+        taskList.innerHTML = "";
+    }
+}

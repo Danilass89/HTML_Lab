@@ -1,0 +1,27 @@
+import { Omit } from "utility-types";
+
+// Пример использования Omit
+type Person = {
+  name: string;
+  age: number;
+  address: string;
+};
+
+// Удаляем поле 'address' из типа Person
+type PersonWithoutAddress = Omit<Person, 'address'>;
+
+// Пример использования ReturnType
+function greet(): string {
+  return "Hello, world!";
+}
+
+// Получаем тип возвращаемого значения функции greet
+type Greeting = ReturnType<typeof greet>;
+
+// Результаты типизации
+const person: PersonWithoutAddress = {
+  name: "John",
+  age: 30
+};
+
+const message: Greeting = "Hello, TypeScript!";
