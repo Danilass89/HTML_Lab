@@ -1,0 +1,70 @@
+NumberSystemConverter.js
+
+import React, { useState } from 'react';
+
+function NumberSystemConverter() {
+  const [inputNumber, setInputNumber] = useState('');
+  const [selectedSystem, setSelectedSystem] = useState('decimal');
+  const [result, setResult] = useState('');
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setInputNumber(inputValue);
+    convertNumber(inputValue, selectedSystem);
+  };
+
+  const handleSystemChange = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedSystem(selectedValue);
+    convertNumber(inputNumber, selectedValue);
+  };
+
+  const convertNumber = (inputNumber, selectedSystem) => {
+    let parsedInputNumber = parseInt(inputNumber, 10);
+
+    if (selectedSystem === 'binary') {
+      setResult(parsedInputNumber.toString(2));
+    } else if (selectedSystem === 'hexadecimal') {
+      setResult(parsedInputNumber.toString(16));
+    } else {
+      setResult('Invalid system');
+    }
+  };
+
+  return (
+    <div>
+      <h2>Number System Converter</h2>
+      <input type="text" value={inputNumber} onChange={handleInputChange} />
+      <select value={selectedSystem} onChange={handleSystemChange}>
+        <option value="decimal">Decimal</option>
+        <option value="binary">Binary</option>
+        <option value="hexadecimal">Hexadecimal</option>
+      </select>
+      <p>Result: {result}</p>
+    </div>
+  );
+}
+
+export default NumberSystemConverter;
+
+
+
+
+App.js
+
+import React from 'react';
+import './App.css';
+import NumberSystemConverter from './NumberSystemConverter';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to My App</h1>
+        <NumberSystemConverter />
+      </header>
+    </div>
+  );
+}
+
+export default App;

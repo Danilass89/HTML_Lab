@@ -1,0 +1,45 @@
+CitySelector.js
+
+import React, { useState } from 'react';
+
+function CitySelector() {
+  const [selectedCity, setSelectedCity] = useState('');
+
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
+  };
+
+  return (
+    <div>
+      <h2>City Selector</h2>
+      <select value={selectedCity} onChange={handleCityChange}>
+        <option value="Rio">Rio de Janeiro</option>
+        <option value="Other">Other</option>
+      </select>
+      {selectedCity !== 'Rio' && <p>No, this is not Rio de Janeiro!</p>}
+    </div>
+  );
+}
+
+export default CitySelector;
+
+
+
+App.js
+
+import React from 'react';
+import './App.css';
+import CitySelector from './CitySelector';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to My App</h1>
+        <CitySelector />
+      </header>
+    </div>
+  );
+}
+
+export default App;

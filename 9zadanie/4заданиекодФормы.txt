@@ -1,0 +1,65 @@
+LifeTimeCalculator.js
+
+import React, { useState, useEffect } from 'react';
+
+function LifeTimeCalculator() {
+  const [birthdate, setBirthdate] = useState('');
+  const [secondsAlive, setSecondsAlive] = useState(0);
+
+  useEffect(() => {
+    const calculateSecondsAlive = () => {
+      const currentTime = new Date();
+      const birthTime = new Date(birthdate);
+      const differenceInSeconds = (currentTime - birthTime) / 1000;
+      setSecondsAlive(differenceInSeconds);
+    };
+
+    const intervalId = setInterval(calculateSecondsAlive, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [birthdate]);
+
+  const handleBirthdateChange = (e) => {
+    setBirthdate(e.target.value);
+  };
+
+  return (
+    <div>
+      <h2>Life Time Calculator</h2>
+      <label htmlFor="birthdate">Enter your birthdate:</label>
+      <input
+        type="date"
+        id="birthdate"
+        value={birthdate}
+        onChange={handleBirthdateChange}
+      />
+      <p>You have lived: {Math.floor(secondsAlive)} seconds.</p>
+    </div>
+  );
+}
+
+export default LifeTimeCalculator;
+
+
+
+
+App.js
+
+import React from 'react';
+import './App.css';
+import LifeTimeCalculator from './LifeTimeCalculator';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to My App</h1>
+        <LifeTimeCalculator />
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+

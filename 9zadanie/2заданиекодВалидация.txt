@@ -1,0 +1,134 @@
+ProfileEditForm.js
+
+import React, { useState } from 'react';
+
+function ProfileEditForm() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    birthDate: '',
+    address: '',
+  });
+
+  const [errors, setErrors] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    birthDate: '',
+    address: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: '' });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { firstName, middleName, lastName } = formData;
+    const newErrors = {};
+
+    if (!firstName) {
+      newErrors.firstName = 'Имя обязательно';
+    }
+
+    if (!middleName) {
+      newErrors.middleName = 'Отчество обязательно';
+    }
+
+    if (!lastName) {
+      newErrors.lastName = 'Фамилия обязательна';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      // Отправить форму
+      console.log('Форма отправлена:', formData);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="firstName">Имя:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+        />
+        {errors.firstName && <span>{errors.firstName}</span>}
+      </div>
+      <div>
+        <label htmlFor="middleName">Отчество:</label>
+        <input
+          type="text"
+          id="middleName"
+          name="middleName"
+          value={formData.middleName}
+          onChange={handleChange}
+        />
+        {errors.middleName && <span>{errors.middleName}</span>}
+      </div>
+      <div>
+        <label htmlFor="lastName">Фамилия:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+        />
+        {errors.lastName && <span>{errors.lastName}</span>}
+      </div>
+      <div>
+        <label htmlFor="birthDate">Дата рождения (ДД.ММ.ГГГГ):</label>
+        <input
+          type="text"
+          id="birthDate"
+          name="birthDate"
+          value={formData.birthDate}
+          onChange={handleChange}
+        />
+        {errors.birthDate && <span>{errors.birthDate}</span>}
+      </div>
+      <div>
+        <label htmlFor="address">Адрес:</label>
+        <input
+          type="text"
+          id="address"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
+        {errors.address && <span>{errors.address}</span>}
+      </div>
+      <button type="submit">Сохранить</button>
+    </form>
+  );
+}
+
+export default ProfileEditForm;
+
+
+
+
+App.js
+
+import React from 'react';
+import ProfileEditForm from './ProfileEditForm'; // Импортируем компонент ProfileEditForm
+
+function App() {
+  return (
+    <div>
+      <h1>Редактирование профиля</h1>
+      <ProfileEditForm /> {/* Рендерим компонент ProfileEditForm */}
+    </div>
+  );
+}
+
+export default App;

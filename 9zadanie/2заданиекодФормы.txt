@@ -1,0 +1,86 @@
+Calculator.js
+
+
+import React, { useState } from 'react';
+
+function Calculator() {
+  const [num1, setNum1] = useState('');
+  const [num2, setNum2] = useState('');
+  const [operation, setOperation] = useState('+');
+  const [result, setResult] = useState('');
+
+  const handleNum1Change = (e) => {
+    setNum1(e.target.value);
+    calculateResult(e.target.value, num2, operation);
+  };
+
+  const handleNum2Change = (e) => {
+    setNum2(e.target.value);
+    calculateResult(num1, e.target.value, operation);
+  };
+
+  const handleOperationChange = (e) => {
+    setOperation(e.target.value);
+    calculateResult(num1, num2, e.target.value);
+  };
+
+  const calculateResult = (num1, num2, operation) => {
+    if (num1 !== '' && num2 !== '') {
+      switch (operation) {
+        case '+':
+          setResult(parseFloat(num1) + parseFloat(num2));
+          break;
+        case '-':
+          setResult(parseFloat(num1) - parseFloat(num2));
+          break;
+        case '*':
+          setResult(parseFloat(num1) * parseFloat(num2));
+          break;
+        case '/':
+          setResult(parseFloat(num1) / parseFloat(num2));
+          break;
+        default:
+          setResult('Invalid operation');
+          break;
+      }
+    }
+  };
+
+  return (
+    <div>
+      <h2>Calculator</h2>
+      <input type="number" value={num1} onChange={handleNum1Change} />
+      <select value={operation} onChange={handleOperationChange}>
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <input type="number" value={num2} onChange={handleNum2Change} />
+      <p>Result: {result}</p>
+    </div>
+  );
+}
+
+export default Calculator;
+
+
+
+App.js
+
+import React from 'react';
+import './App.css';
+import Calculator from './Calculator';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Welcome to My App</h1>
+        <Calculator />
+      </header>
+    </div>
+  );
+}
+
+export default App;

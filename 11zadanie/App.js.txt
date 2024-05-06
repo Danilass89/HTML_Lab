@@ -1,0 +1,57 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [taskInput, setTaskInput] = useState('');
+
+  const addTask = () => {
+    if (taskInput.trim() !== '') {
+      const newTask = {
+        id: Date.now(),
+        text: taskInput.trim(),
+        date: new Date().toLocaleString()
+      };
+      setTasks([...tasks, newTask]);
+      setTaskInput('');
+    } else {
+      alert('Пожалуйста, введите задачу!');
+    }
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
+  const deleteAllTasks = () => {
+    setTasks([]);
+  };
+
+  return (
+    <div className="App">
+      <h1>Список задач</h1>
+      <div className="input-container">
+        <input 
+          type="text" 
+          value={taskInput} 
+          onChange={(e) => setTaskInput(e.target.value)} 
+          placeholder="Введите задачу" 
+        />
+        <button className="add-task-button" onClick={addTask}>Добавить задачу</button>
+        <button className="delete-all-button" onClick={deleteAllTasks}>Удалить все задачи</button>
+      </div>
+      <ul id="taskList">
+        {tasks.map(task => (
+          <li key={task.id}>
+            <span>{task.text}</span>
+            <span>{task.date}</span>
+            <button onClick={() => deleteTask(task.id)}>Удалить</button>
+          </li>
+        ))}
+      </ul>
+      <footer>&copy; 2024 Ваша компания</footer>
+    </div>
+  );
+}
+
+export default App;
