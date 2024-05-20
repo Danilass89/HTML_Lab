@@ -1,0 +1,42 @@
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import TaskList from './TaskList';
+
+describe('TaskList component', () => {
+  test('renders task list with input and buttons', () => {
+    const { getByPlaceholderText, getByText } = render(<TaskList />);
+    const inputElement = getByPlaceholderText('Введите задачу');
+    const addButton = getByText('Добавить задачу');
+    const deleteAllButton = getByText('Удалить все задачи');
+
+    expect(inputElement).toBeInTheDocument();
+    expect(addButton).toBeInTheDocument();
+    expect(deleteAllButton).toBeInTheDocument();
+  });
+
+  test('adds new task to the list', () => {
+    const { getByPlaceholderText, getByText, getByLabelText } = render(<TaskList />);
+    const inputElement = getByPlaceholderText('Введите задачу');
+    const addButton = getByText('Добавить задачу');
+
+    fireEvent.change(inputElement, { target: { value: 'Test Task' } });
+    fireEvent.click(addButton);
+
+    const taskElement = getByLabelText('Test Task');
+    expect(taskElement).toBeInTheDocument();
+  });
+
+  test('deletes all tasks from the list', () => {
+    const { getByPlaceholderText, getByText, getByTestId } = render(<TaskList />);
+    const inputElement = getByPlaceholderText('Введите задачу');
+    const addButton = getByText('Добавить задачу');
+    const deleteAllButton = getByText('Удалить все задачи');
+
+    fireEvent.change(inputElement, { target: { value: 'Test Task' } });
+    fireEvent.click(addButton);
+    fireEvent.click(deleteAllButton);
+
+    const taskList = getByTestId('task-list');
+    expect(taskList.children.length).toBe(0);
+  });
+});

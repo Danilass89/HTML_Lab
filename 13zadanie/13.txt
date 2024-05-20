@@ -1,0 +1,31 @@
+const fetch = require('node-fetch');
+
+// Функция для отправки GET запроса к серверу
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error.message);
+    return null;
+  }
+}
+
+// Пример использования функции для получения данных
+const apiUrl = 'https://api.example.com/data'; //  адрес моего API
+fetchData(apiUrl)
+  .then(data => {
+    if (data) {
+      console.log('Received data from the server:', data);
+      // Далее можно обрабатывать полученные данные
+    } else {
+      console.log('Failed to fetch data from the server.');
+    }
+  })
+  .catch(error => {
+    console.error('Error during data fetch:', error);
+  });
