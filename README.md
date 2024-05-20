@@ -10,3 +10,5 @@
 9zadanie сделано </br>
 10zadanie сделано </br>
 11zadanie сделано </br>
+12zadanie сделано </br>
+13zadanie сделано </br>
